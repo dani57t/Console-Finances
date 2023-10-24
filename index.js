@@ -86,3 +86,75 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+// Declation of all variables
+
+var totalMonths = 0;        // Total number of months
+var totalMoney = 0;         // Total profits & losses
+var decreaseMonth = ""      // Month with greatest decrease in profits & losses
+var increaseMonth = ""      // Month with greatest increase in profits & losses
+
+
+var greatestIncrease = 0;   // Greatest increase in profit & losses
+var greatestDecrease = 0;   // Greatest decrease in profit & losses
+var averageChange = 0;      // Avg of changes in profit &losses
+
+// Storage variables
+
+var changes = [];     // Array to store changes in profit & losses
+var changesTotal = 0; // Variable to store total of changes in profit & losses
+
+// Total months is equal to the amount of rows in finances array
+
+totalMonths = finances.length;
+
+
+
+// Loop finances array to get total profits & losses and all the changes to profits & losses
+
+for (var i = 0; i < finances.length - 1; i++) {
+  totalMoney += finances[i][1];
+  if (i === finances.length - 2) {
+    totalMoney += finances[i+1][1];
+  }
+
+  // Push all profits & losses to changes var
+
+  changes.push(finances[i+1][1] - finances[i][1]);
+}
+
+// Loop changes array to get total of all changes and greatest increase/decrease in profits/losses
+
+for (var i = 0; i < changes.length; i++) {
+  changesTotal += changes[i]; // Log the total of all changes
+
+  // Stores the highest number in greatestIncrease
+
+  if (greatestIncrease < changes[i]) {
+    greatestIncrease = changes[i];
+    increaseMonth = finances[i+1][0]; // Calc the month of greatest increase
+  }
+
+  // Stores the lowest number in greatestDecrease
+
+  if (greatestDecrease > changes[i]) {
+    greatestDecrease = changes[i];
+    decreaseMonth = finances[i+1][0]; // Calc the month of greatest decrease
+  }
+
+}
+
+// Calc the avg of changes in profits/losses by dividing changesTotal by number of elements in changes array
+// Also rounds to 2 decimal places
+
+averageChange = Math.round((changesTotal / changes.length) * 100) / 100;
+
+// Log all information to console
+
+console.log("Financial Analysis");
+console.log("-----------------------------------------------------------------");
+console.log("Total Months: " + totalMonths);
+console.log("Total: $" + totalMoney);
+console.log("Average Change: $" + averageChange);
+console.log("Greatest Increase in Profits/Losses: " + increaseMonth + " ($" + greatestIncrease + ")");
+console.log("Greatest Decrease in Profits/Losses: " + decreaseMonth + " ($" + greatestDecrease + ")");
